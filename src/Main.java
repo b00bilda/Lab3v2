@@ -9,56 +9,40 @@ import static Subjects.SubjectStatus.DEAD;
 
 public class Main {
     public static void main(String[] args) {
-        Azazello azazello = new Azazello("Азазелло", Type.HUMAN);
-        Begemot begemot = new Begemot("Бегемот", Type.CAT);
-        Margarita margarita = new Margarita("Маргарита", Type.HUMAN);
-        Gella gella = new Gella("Гелла", Type.HUMAN);
-        Korovyev korovyev = new Korovyev("Коровьев", Type.HUMAN);
-        Owl owl = new Owl("сова");
-        Gun gun = new Gun("револьвер");
-        Clock clock = new Clock("часы");
-        Glass glass = new Glass("бокал");
+        Azazello azazello = new Azazello(Type.HUMAN);
+        Begemot begemot = new Begemot(Type.CAT);
+        Margarita margarita = new Margarita(Type.HUMAN);
+        Gella gella = new Gella(Type.HUMAN);
+        Korovyev korovyev = new Korovyev(Type.HUMAN);
+        Owl owl = new Owl();
+        Gun gun = new Gun();
+        Clock clock = new Clock();
+        Glass glass = new Glass();
         ListOfShooters list = new ListOfShooters();
 
         azazello.talking();
         begemot.getTheGun();
-        // System.out.println(begemot.gunsQuantity);
+
         if (begemot.gunsQuantity > 1) {
-            azazello.giveTheGun();
+            azazello.giveTheGun(begemot, gun);
         }
 
         begemot.gettingReady();
-        margarita.beInjured();
+        margarita.scare();
 
         begemot.shootToSubject(owl);
-        if (begemot.hitTheSubject(owl) == true) {
-            owl.beDamaged();
-            // list.addCharacter(begemot);
-        } else {
-            begemot.missTheTarget(owl);
-        }
-        if (begemot.gunsQuantity > 1) {
-            if (begemot.hitTheSubject(clock) == true) {
-                clock.beDamaged();
-            } else {
-                begemot.missTheTarget(clock);
-            }
-        }
+        begemot.shootToSubject(clock);
 
-        if ((owl.getSubStatus() == SubjectStatus.DEAD) | (clock.getSubStatus() == SubjectStatus.DAMAGED)) {
+        if ((owl.getSubStatus() == DEAD) | (clock.getSubStatus() == DAMAGED) | (owl.getSubStatus() == DAMAGED)) {
             list.addCharacter(begemot);
         }
 
         azazello.gettingReady();
         azazello.shootToSubject(glass);
-        if (azazello.hitTheSubject(glass) == true) {
-            glass.beDamaged();
+        if (glass.getSubStatus() == DAMAGED) {
             list.addCharacter(azazello);
-        } else {
-            azazello.missTheTarget(glass);
         }
 
-        //int shooters = list.getNumberOfShooters();
         try {
             list.getNumberOfShooters();
         } catch (ZeroShooters e) {
@@ -69,6 +53,12 @@ public class Main {
 
         assaultTo(gella, begemot);
         gella.beInjured();
+        try {
+            list.hasCharacter(begemot);
+        } catch (BegemotIsNotShooter b) {
+            System.out.println(b.getMessage());
+            System.exit(0);
+        }
         begemot.fight(gella);
         begemot.fight();
 
@@ -76,7 +66,12 @@ public class Main {
         begemot.talking();
         begemot.fight(gella, begemot);
         stopFighting(gella, begemot);
-        korovyev.blow(gella);
+        try {
+            korovyev.blow(gella);
+        } catch (GellaIsStillInjured g) {
+            System.out.println(g.getMessage());
+            System.exit(0);
+        }
         begemot.talking();
 
     }

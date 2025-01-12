@@ -1,14 +1,16 @@
 package Subjects;
 
 public class Glass extends Subject {
-    public Glass(String name) {
-        super(name);
+    public Glass() {
+        super("бокал");
         super.setSubjectStatus(SubjectStatus.NORMAL);
     }
 
     @Override
     public void beDamaged() {
-        this.setSubjectStatus(SubjectStatus.DAMAGED);
-        System.out.println("Бокал упал со стола и разбился");
+        if (this.HP == 1) {
+            this.setSubjectStatus(SubjectStatus.DAMAGED);
+            System.out.println(this.getName() + " упал со стола и разбился");
+        }
     }
 }

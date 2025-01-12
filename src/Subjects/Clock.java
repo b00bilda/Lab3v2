@@ -1,18 +1,18 @@
 package Subjects;
 
 public class Clock extends Subject {
-    public Clock(String name) {
-        super(name);
+    public Clock() {
+        super("часы");
         super.setSubjectStatus(SubjectStatus.NORMAL);
     }
 
     @Override
     public void beDamaged() {
-        this.setSubjectStatus(SubjectStatus.DAMAGED);
-        System.out.println("Часы разбились и остановились");
+        if (this.HP == 1) {
+            this.setSubjectStatus(SubjectStatus.DAMAGED);
+            System.out.println(this.getName() + " разбились и остановились");
+        }
     }
 
-    // public String stop() {
-        // return " и остановились";
-    // }
+
 }

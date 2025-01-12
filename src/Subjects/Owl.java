@@ -3,8 +3,8 @@ package Subjects;
 import Characters.CharacterStatus;
 
 public class Owl extends Subject {
-    public Owl(String name) {
-        super(name);
+    public Owl() {
+        super("сова");
         super.setSubjectStatus(SubjectStatus.NORMAL);
     }
 
@@ -14,7 +14,12 @@ public class Owl extends Subject {
 
     @Override
     public void beDamaged() {
-        this.setSubjectStatus(SubjectStatus.DEAD);
-        System.out.println("Убитая сова упала с камина");
+        if (this.HP == 0) {
+            this.setSubjectStatus(SubjectStatus.DEAD);
+            System.out.println("Убитая " + this.getName() + " упала с камина");
+        } else {
+            System.out.println(this.getName() + " упала");
+        }
+
     }
 }

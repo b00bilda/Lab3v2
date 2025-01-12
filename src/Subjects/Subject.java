@@ -3,6 +3,7 @@ package Subjects;
 public abstract class Subject implements BeDamaged {
     public String name;
     public SubjectStatus subStatus;
+    public int HP = 2;
 
     public Subject(String name) {
         this.name = name;
@@ -22,6 +23,12 @@ public abstract class Subject implements BeDamaged {
 
 
     public void beDamaged() {
-        this.setSubjectStatus(SubjectStatus.DAMAGED);
+        if (this.HP == 1) {
+            this.setSubjectStatus(SubjectStatus.DAMAGED);
+        } if (this.HP == 0) {
+            this.setSubjectStatus(SubjectStatus.DEAD);
+        } else {
+            this.setSubjectStatus(SubjectStatus.NORMAL);
+        }
     }
 }

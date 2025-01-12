@@ -1,13 +1,14 @@
 package Characters;
 
+import static Characters.CharacterStatus.FEAR;
+
 public class Margarita extends Character {
-    public Margarita(String name, Type type) {
-        super(name, type);
+    public Margarita(Type type) {
+        super("Маргарита", type);
         super.setStatus(CharacterStatus.NORMAL);
     }
 
-    @Override
-    public void beInjured() {
-        System.out.println("Маргарита сидела, заткнув пальцами уши.");
+    public void scare() {
+        System.out.println(this.getName() + " сидела, заткнув пальцами уши.");
     }
 }

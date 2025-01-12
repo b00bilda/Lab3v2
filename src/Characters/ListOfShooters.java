@@ -19,4 +19,12 @@ public class ListOfShooters {
             throw new ZeroShooters();
         }
     }
+
+    public String hasCharacter(Character ch) throws BegemotIsNotShooter {
+        if (list.contains(ch) == true) {
+            return "";
+        } else {
+            throw new BegemotIsNotShooter();
+        }
+    }
 }

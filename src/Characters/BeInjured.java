@@ -1,5 +1,5 @@
 package Characters;
 
 public interface BeInjured {
-    public void beInjured();
+    public String beInjured();
 }

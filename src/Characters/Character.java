@@ -8,15 +8,16 @@ import Subjects.Subject;
 import static Characters.Type.CAT;
 import static Characters.Type.HUMAN;
 
-public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, ToWhat, AssaultTo, BeInjured, Fight, BeHealed {
+public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, ToWhat, AssaultTo, Fight, BeHealed, BeInjured {
     String name;
     CharacterStatus chStatus;
     Type type;
     public int gunsQuantity;
+    public int HP = 5;
 
     public Character(String name, Type type) {
-        this.name = name;
         this.type = type;
+        this.name = name;
     }
 
     public boolean equals(Character ch) {
@@ -49,14 +50,6 @@ public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, 
         }
     }
 
-    // public String toWho(Subject s) {
-        // return s.name.substring(0, (s.name.length() - 1)) + "у";
-    // }
-
-
-    // public String toWho(Owl o) {
-        // return "сову";
-    // }
 
     public String toWhat(Subject s) {
         switch(s.getClass().getSimpleName()) {
@@ -79,6 +72,8 @@ public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, 
                 return "Коровьева";
             case "Azazello":
                 return "Азазелло";
+            case "Begemot":
+                return "коту";
             default:
                 return "";
         }
@@ -102,10 +97,15 @@ public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, 
     }
 
 
-    public void shootToHuman(Character ch) {}
 
     public void shootToSubject(Subject s) {
         System.out.println(this.getName() + " выстрелил в " + toWhat(s));
+        if (this.hitTheSubject(s) == true) {
+            s.HP = s.HP - 1;
+            s.beDamaged();
+        } else {
+            this.missTheTarget(s);
+        }
     }
 
     public void getTheGun() {
@@ -163,14 +163,23 @@ public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, 
     public static void assaultTo(Character attacker, Character defender) {
         switch(attacker.getClass().getSimpleName()) {
             case "Gella" -> System.out.print(attacker.getName() + " вцепилась в ");
+            default -> System.out.print(attacker.getName() + " напал на ");
         }
         switch(defender.getClass().getSimpleName()) {
             case "Begemot" -> System.out.println("кота");
+            default -> whom(defender);
         }
+        defender.HP = defender.HP - 1;
+        defender.beInjured();
     }
 
-    public void beInjured() {}
+    @Override
     public String beHealed() {
+        return "";
+    }
+
+    @Override
+    public String beInjured() {
         return "";
     }
 
