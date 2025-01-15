@@ -5,6 +5,8 @@ import Subjects.Gun;
 import Subjects.Owl;
 import Subjects.Subject;
 
+import java.util.Objects;
+
 import static Characters.Type.CAT;
 import static Characters.Type.HUMAN;
 
@@ -21,12 +23,16 @@ public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, 
     }
 
     public boolean equals(Character ch) {
-        return this.name == ch.name;
+        if ((this.name == ch.name) & (this.type == ch.type)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return Objects.hash(name);
     }
 
     @Override
