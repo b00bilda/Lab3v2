@@ -8,10 +8,6 @@ public class Owl extends Subject {
         super.setSubjectStatus(SubjectStatus.NORMAL);
     }
 
-    void sleep() {
-        System.out.println(this.getName() + " дремала на каминной полке.");
-    }
-
     @Override
     public void beDamaged() {
         if (this.HP == 0) {

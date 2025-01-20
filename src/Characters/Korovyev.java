@@ -6,12 +6,10 @@ public class Korovyev extends Character {
         super.setStatus(CharacterStatus.NORMAL);
     }
 
-    public void blow(Character ch) throws GellaIsStillInjured {
-        if (Math.random() > 0.4) {
-            ch.HP = ch.HP + 1;
-        } else {
-            throw new GellaIsStillInjured();
-        }
-        System.out.println("Коровьев подул и " + ch.beHealed() + ".");
+    public void blow(Gella gella) {
+        System.out.print(this.getName() + " подул и ");
+        gella.setStatus(CharacterStatus.NORMAL);
+        gella.HP++;
+        gella.beHealed();
     }
 }

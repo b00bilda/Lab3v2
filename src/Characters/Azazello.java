@@ -15,8 +15,9 @@ public class Azazello extends Character {
         System.out.println(this.getName() + " что-то прорычал");
     }
 
-    public void giveTheGun(Character ch, Gun g) {
-        System.out.println(this.getName() + " вынул второй " + g.getName() + " и протянул " + toWho(ch));
+    public void giveTheGun(Begemot begemot, Gun g) {
+        System.out.println(this.getName() + " вынул второй " + g.getName() + " и протянул " + begemot.getName());
+        begemot.hasTheGun(g);
     }
 
     @Override

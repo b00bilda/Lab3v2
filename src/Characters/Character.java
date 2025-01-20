@@ -9,17 +9,22 @@ import java.util.Objects;
 
 import static Characters.Type.CAT;
 import static Characters.Type.HUMAN;
+import static java.util.Objects.hash;
 
-public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, ToWhat, AssaultTo, Fight, BeHealed, BeInjured {
+abstract class Character implements BeHealed, BeInjured, Shoot, WayOfTalking, HitTheTarget, ToWhat {
     String name;
     CharacterStatus chStatus;
     Type type;
-    public int gunsQuantity;
-    public int HP = 5;
+    final int gunsQuantity = 0;
+    public int HP = 3;
 
     public Character(String name, Type type) {
         this.type = type;
         this.name = name;
+    }
+
+    public static int getHP(Character ch) {
+        return ch.HP;
     }
 
     public boolean equals(Character ch) {
@@ -30,14 +35,28 @@ public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, 
         }
     }
 
+    public boolean equals(CharacterStatus chStatus) {
+        if ((this.hashCode() == chStatus.hashCode())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return hash(this) * 5;
     }
 
     @Override
     public String toString() {
         return getType() + " " + getName();
+    }
+
+    public void beHealed() {}
+
+    public void beInjured() {
+
     }
 
     public void setStatus(CharacterStatus chStatus) {
@@ -49,7 +68,7 @@ public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, 
     }
 
     public String getType() {
-        if (this.type == CAT) {
+        if ((this.type.equals(Type.CAT))) {
             return "Кот";
         } else {
             return "Человек";
@@ -114,14 +133,6 @@ public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, 
         }
     }
 
-    public void getTheGun() {
-        if (Math.random() > 0.5) {
-            this.gunsQuantity = 2;
-        }
-        else {
-            this.gunsQuantity = 1;
-        }
-    }
 
     public String say() {
         switch(this.getClass().getSimpleName()) {
@@ -142,21 +153,13 @@ public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, 
         }
     }
 
+
     public void talking() {}
 
     public boolean hitTheSubject(Subject s) {
         return true;
     }
-    public boolean hitTheCharacter(Character ch) {
-        return true;
-    }
 
-    public void gettingReady() {
-        switch (this.getType()) {
-            case "Кот" -> System.out.println(this.getType() + " долго готовился к выстрелу");
-            case "Человек" -> System.out.println(this.getName() + " приготовился к выстрелу");
-        }
-    }
 
     public void missTheTarget(Subject s) {
         if (Math.random() > 0.5) {
@@ -166,34 +169,5 @@ public class Character implements Shoot, WayOfTalking, GetTheGun, HitTheTarget, 
         }
     }
 
-    public static void assaultTo(Character attacker, Character defender) {
-        switch(attacker.getClass().getSimpleName()) {
-            case "Gella" -> System.out.print(attacker.getName() + " вцепилась в ");
-            default -> System.out.print(attacker.getName() + " напал на ");
-        }
-        switch(defender.getClass().getSimpleName()) {
-            case "Begemot" -> System.out.println("кота");
-            default -> whom(defender);
-        }
-        defender.HP = defender.HP - 1;
-        defender.beInjured();
-    }
 
-    @Override
-    public String beHealed() {
-        return "";
-    }
-
-    @Override
-    public String beInjured() {
-        return "";
-    }
-
-    public void fight(Character attacker, Character defender) {}
-    public void fight() {}
-    public void fight(Character ch) {}
-
-    public static void stopFighting(Character ch, Character ch1) {
-        System.out.print("Дерущихся " + whom(ch) + " и " + whom(ch1) + " разняли. ");
-    }
 }
